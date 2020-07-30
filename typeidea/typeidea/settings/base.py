@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'typeidea.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
+#only for test git
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

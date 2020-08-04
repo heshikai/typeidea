@@ -26,7 +26,7 @@ SECRET_KEY = '+jwdb2%&wjuvghy2%ck3n4cr5j41yty%8*r+5+(ran(8n1i6s7'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+THEMES = 'bootstrap'
 
 # Application definition
 
@@ -55,10 +55,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'typeidea.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'themes',THEMES,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,4 +124,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = '/tmp/static'
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'themes',THEMES,"static")
+]

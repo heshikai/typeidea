@@ -1,5 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.functional import cached_property
+
+import mistune
 
 # Create your models here.
 
@@ -89,6 +92,8 @@ class Post(models.Model):
     desc=models.CharField(max_length=1024,blank=True,verbose_name="摘要")
     content = models.TextField(verbose_name="正文",
                                help_text="正文必须是MarkDown格式")
+    content_html = models.TextField(verbose_name = "正文html代码",
+                                    blank = True,editable=False)
     status = models.PositiveIntegerField(
         default=STATUS_NORMAL,
         choices=STATUS_ITEMS,
@@ -134,6 +139,14 @@ class Post(models.Model):
     def latest_posts(cls):
         query_set = cls.objects.filter(status=cls.STATUS_NORMAL)
         return query_set
+
+    @cached_property
+    def tags(self):
+        return self.tag.name
+        
+    def save(self,*args,**kwargs):
+        self.content_html = mistune.markdown(self.content)
+        super().save(*args,**kwargs)
 
     def __str__(self):
         return self.title
